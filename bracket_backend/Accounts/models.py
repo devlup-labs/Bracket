@@ -10,6 +10,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 SEX_CHOICES = (
     ('F', 'Female',),
     ('M', 'Male',),
+    ('','Prefer Not To Say')
 )
 
 class CustomUserManager(BaseUserManager):
@@ -24,15 +25,7 @@ class CustomUserManager(BaseUserManager):
 
         return user
 
-    def create_superuser(self, email, password, **extra_fields):
-        extra_fields.setdefault("is_staff", True)
-        extra_fields.setdefault("is_superuser", True)
-
-        if extra_fields.get("is_staff") is not True:
-            raise ValueError("Superuser has to have is_staff being True")
-
-        if extra_fields.get("is_superuser") is not True:
-            raise ValueError("Superuser has to have is_superuser being True")
+    
 
         return self.create_user(email=email, password=password, **extra_fields)
 
