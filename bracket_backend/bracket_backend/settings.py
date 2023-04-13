@@ -2,6 +2,7 @@ from pathlib import Path
 import os
 import dotenv
 dotenv.load_dotenv()
+import datetime
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -30,6 +31,7 @@ INSTALLED_APPS = [
     'Accounts',
     "rest_framework",
     "rest_framework.authtoken",
+    'corsheaders'
     
 ]
 
@@ -39,6 +41,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -48,6 +51,9 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'bracket_backend.urls'
 
 REST_FRAMEWORK = {
+     'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
     "NON_FIELD_ERRORS_KEY": "errors",
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework.authentication.SessionAuthentication",
@@ -57,6 +63,13 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated"),
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 3,
+}
+
+JWT_AUTH = {
+    'JWT_VERIFY': True,
+    'JWT_VERIFY_EXPIRATION': True,
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(minutes=3000),
+    'JWT_AUTH_HEADER_PREFIX': 'Bearer',
 }
 
 TEMPLATES = [
@@ -136,3 +149,6 @@ REST_FRAMEWORK = {
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CORS_ORIGIN_ALLOW_ALL= True
+CORS_ALLOW_CREDENTIALS= True
