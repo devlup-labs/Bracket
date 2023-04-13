@@ -1,4 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.example.bracket_frontend">
     <application
         android:label="bracket_frontend"
         android:name="${applicationName}"
